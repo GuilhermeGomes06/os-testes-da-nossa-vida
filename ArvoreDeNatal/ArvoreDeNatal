@@ -1,0 +1,72 @@
+import java.util.Scanner;
+ 
+public class Main {
+
+    private static String repeatChar(char c, int count) {
+
+        if (count <= 0) {
+
+            return "";
+
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < count; i++) {
+
+            sb.append(c);
+
+        }
+
+        return sb.toString();
+
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        while (sc.hasNextInt()) {
+
+            int N = sc.nextInt();
+
+            int totalWidth = N; 
+
+            for (int currentWidth = 1; currentWidth <= N; currentWidth += 2) {
+
+                int padding = (totalWidth - currentWidth) / 2;
+
+                String spaces = repeatChar(' ', padding);
+
+                String stars = repeatChar('*', currentWidth);
+
+                System.out.println(spaces + stars);
+
+            }
+ 
+            int baseWidth1 = 1;
+
+            int paddingBase1 = (totalWidth - baseWidth1) / 2;
+
+            String spacesBase1 = repeatChar(' ', paddingBase1);
+
+            System.out.println(spacesBase1 + "*");
+ 
+            int baseWidth3 = 3;
+
+            int paddingBase3 = (totalWidth - baseWidth3) / 2;
+
+            String spacesBase3 = repeatChar(' ', paddingBase3);
+
+            System.out.println(spacesBase3 + "***");
+ 
+            System.out.println();
+
+        }
+
+        sc.close();
+
+    }
+
+}
+ 

@@ -1,0 +1,92 @@
+package exemplo;
+
+public class CharacterSegmenter {
+
+    public static int segmentMessage(int limit, String msg) {
+        if (msg == null || msg.equals("")) {
+            return 0;
+        }
+
+        int contadorLetras = 0;
+
+        for (int i = 0; i < msg.length(); i++) {
+            char letraAtual = msg.charAt(i);
+            
+            if (letraAtual != ' ' && letraAtual != '\t' && letraAtual != '\n') {
+                contadorLetras++;
+            }
+        }
+
+        if (contadorLetras == 0) {
+            return 0;
+        }
+
+        int lines = (contadorLetras + limit - 1) / limit;
+
+        return lines;
+    }
+}
+package exemplo;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class CharacterSegmenterTest {
+
+    @Test
+    void deveCalcularDivisaoExata() {
+        String mensagem = "ABCDE FGH";
+        int limite = 4;
+        
+        int resultado = CharacterSegmenter.segmentMessage(limite, mensagem);
+        
+        assertEquals(2, resultado);
+    }
+
+    @Test
+    void deveCalcularDivisaoComSobra() {
+        String mensagem = "ABCDE FGH J";
+        int limite = 4;
+        
+        int resultado = CharacterSegmenter.segmentMessage(limite, mensagem);
+        
+        assertEquals(3, resultado);
+    }
+
+    @Test
+    void deveIgnorarApenasEspacos() {
+        String mensagem = "   \n  \t ";
+        int limite = 5;
+        
+        int resultado = CharacterSegmenter.segmentMessage(limite, mensagem);
+        
+        assertEquals(0, resultado);
+    }
+
+    @Test
+    void deveRetornarZeroSeVazio() {
+        String mensagem = "";
+        int limite = 5;
+        
+        assertEquals(0, CharacterSegmenter.segmentMessage(limite, mensagem));
+    }
+
+    @Test
+    void deveFuncionarComLimiteUm() {
+        String mensagem = "A B C";
+        int limite = 1;
+        
+        assertEquals(3, CharacterSegmenter.segmentMessage(limite, mensagem));
+    }
+
+    @Test
+    void deveLancarErroSeLimiteForZero() {
+        String mensagem = "Teste";
+        int limite = 0;
+
+        assertThrows(ArithmeticException.class, () -> {
+            CharacterSegmenter.segmentMessage(limite, mensagem);
+        });
+    }
+}
